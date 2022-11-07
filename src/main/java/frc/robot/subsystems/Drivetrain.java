@@ -33,6 +33,7 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor2.follow(m_leftMotor1);
     m_rightMotor2.follow(m_rightMotor1);
     
+    
   }
 
   /**
