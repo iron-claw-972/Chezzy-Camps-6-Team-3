@@ -38,6 +38,8 @@ public class Robot extends TimedRobot {
     Operator.configureControls();
   }
 
+  
+
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during autonomous.
    */
-  @Override
+  @Override  
   public void autonomousPeriodic() {
   }
 
@@ -113,6 +115,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
 
   /**
