@@ -5,12 +5,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.ShuffleboardManager;
+import lib.controllers.GameController;
+import lib.controllers.GameController.Button;
+import lib.controllers.GameController.Axis;
+import frc.robot.controls.Driver;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,6 +29,9 @@ public class Robot extends TimedRobot {
   private Command m_autoCommand;
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
+  public static Drivetrain d = new Drivetrain();
+  public Driver dr = new Driver();
+  Joystick controller = new Joystick(0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -84,6 +94,7 @@ public class Robot extends TimedRobot {
    */
   @Override  
   public void autonomousPeriodic() {
+
   }
 
   @Override
@@ -95,6 +106,7 @@ public class Robot extends TimedRobot {
     if (m_autoCommand != null) {
       m_autoCommand.cancel();
     }
+    
   }
 
   /**
@@ -102,6 +114,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    d.arcadeDrive(dr.getRawThrottleValue(), dr.getRawTurnValue());
   }
 
   @Override

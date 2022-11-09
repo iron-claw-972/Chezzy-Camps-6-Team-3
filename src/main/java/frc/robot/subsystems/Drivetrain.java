@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 import frc.robot.util.MotorFactory;
@@ -30,6 +32,9 @@ public class Drivetrain extends SubsystemBase {
 
     m_leftMotor2.follow(m_leftMotor1);
     m_rightMotor2.follow(m_rightMotor1);
+
+    MotorControllerGroup leftMotors = new MotorControllerGroup(m_leftMotor1, m_leftMotor2);
+    MotorControllerGroup rightMotors = new MotorControllerGroup(m_rightMotor1, m_rightMotor2);
   }
 
   /**
@@ -42,6 +47,24 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor1.set(ControlMode.PercentOutput, leftPower);
     m_rightMotor1.set(ControlMode.PercentOutput, rightPower);
   }
+
+  public double averageLeftPosition()
+  {
+      return(m_leftMotor1.getSelectedSensorPosition() + m_leftMotor2.getSelectedSensorPosition())/2.0;
+  }
+
+  public double averageRightPosition()
+  {
+      return(m_rightMotor1.getSelectedSensorPosition() + m_rightMotor2.getSelectedSensorPosition())/2.0;
+  }
+  public double averagePosition()
+  {
+      return(m_leftMotor1.getSelectedSensorPosition() + m_leftMotor2.getSelectedSensorPosition() + m_rightMotor1.getSelectedSensorPosition() + m_rightMotor2.getSelectedSensorPosition())/4.0;
+  }
+
+  
+
+  
 
   /**
    * Drives the robot using arcade controls.
