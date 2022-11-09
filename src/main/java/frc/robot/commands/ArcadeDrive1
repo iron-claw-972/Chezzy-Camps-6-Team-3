@@ -4,11 +4,9 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  private final ExampleSubsystem m_subsystem;
+public class ArcadeDrive1 extends CommandBase {
+  private final ArcadeDrive1 m_subsystem;
 
-  Drivetrain d = new Drivetrain();
-  Driver dr = new Driver();
 
   /**
    * Creates a new ExampleCommand.
@@ -30,20 +28,20 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    d.arcadeDrive(dr.getRawThrottleValue(), dr.getRawTurnValue());
+    Robot.drive.arcadeDrive(Robot.dr.getRawThrottleValue(), Robot.dr.getRawTurnValue());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      d.leftMotors.stop();
-      d.rightMotors.stop();
+      Robot.drive.leftMotors.stop();
+      Robot.drive.rightMotors.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
 
-    return dr.ButtonA();
+    return Robot.dr.ButtonA();
   }
 }
