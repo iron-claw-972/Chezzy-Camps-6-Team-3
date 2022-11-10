@@ -19,23 +19,22 @@ import frc.robot.util.MotorFactory;
 public class Drivetrain extends SubsystemBase {
 
   private final WPI_TalonFX m_leftMotor1;
-  private final WPI_TalonFX m_leftMotor2;
-  
   private final WPI_TalonFX m_rightMotor1;
+  private final WPI_TalonFX m_leftMotor2;
   private final WPI_TalonFX m_rightMotor2;
+  
+
  
 
   public Drivetrain() {
     m_leftMotor1 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor1);
-    m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
     m_rightMotor1 = MotorFactory.createTalonFX(Constants.drive.kRightMotor1);
+    m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
     m_rightMotor2 = MotorFactory.createTalonFX(Constants.drive.kRightMotor2);
 
-    m_leftMotor2.follow(m_leftMotor1);
-    m_rightMotor2.follow(m_rightMotor1);
+    m_rightMotor1.setInverted(true);
 
-    MotorControllerGroup leftMotors = new MotorControllerGroup(m_leftMotor1, m_leftMotor2);
-    MotorControllerGroup rightMotors = new MotorControllerGroup(m_rightMotor1, m_rightMotor2);
+
   }
 
   /**
@@ -51,16 +50,16 @@ public class Drivetrain extends SubsystemBase {
 
   public double averageLeftPosition()
   {
-      return(m_leftMotor1.getSelectedSensorPosition() + m_leftMotor2.getSelectedSensorPosition())/2.0;
+      return(m_leftMotor1.getSelectedSensorPosition();
   }
 
   public double averageRightPosition()
   {
-      return(m_rightMotor1.getSelectedSensorPosition() + m_rightMotor2.getSelectedSensorPosition())/2.0;
+      return(m_rightMotor1.getSelectedSensorPosition();
   }
   public double averagePosition()
   {
-      return(m_leftMotor1.getSelectedSensorPosition() + m_leftMotor2.getSelectedSensorPosition() + m_rightMotor1.getSelectedSensorPosition() + m_rightMotor2.getSelectedSensorPosition())/4.0;
+      return(m_leftMotor1.getSelectedSensorPosition() + m_rightMotor1.getSelectedSensorPosition());
   }
 
   
@@ -74,7 +73,7 @@ public class Drivetrain extends SubsystemBase {
    * @param turn the commanded turn rotation
    */
   public void arcadeDrive(double throttle, double turn) {
-    m_leftMotor1.set(ControlMode.PercentOutput, throttle + turn);
-    m_rightMotor1.set(ControlMode.PercentOutput, throttle - turn);
+    m_leftMotor1.set((throttle - turn)*0.5);
+    m_rightMotor1.set((throttle - turn)*0.5);
   }
 }
