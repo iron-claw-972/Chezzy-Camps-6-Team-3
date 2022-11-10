@@ -23,6 +23,7 @@ public class Drivetrain extends SubsystemBase {
   
   private final WPI_TalonFX m_rightMotor1;
   private final WPI_TalonFX m_rightMotor2;
+ 
 
   public Drivetrain() {
     m_leftMotor1 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor1);

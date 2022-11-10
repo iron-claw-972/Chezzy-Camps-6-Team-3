@@ -1,11 +1,13 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.Robot;
+import frc.robot.controls.Driver;
+import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive1 extends CommandBase {
-  private final ArcadeDrive1 m_subsystem;
+  private final Drivetrain m_subsystem;
 
 
   /**
@@ -13,7 +15,7 @@ public class ArcadeDrive1 extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(ExampleSubsystem subsystem) {
+  public ArcadeDrive1(Drivetrain subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -34,8 +36,8 @@ public class ArcadeDrive1 extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      Robot.drive.leftMotors.stop();
-      Robot.drive.rightMotors.stop();
+      //.drive.leftMotors.stop();
+      //Robot.drive.rightMotors.stop();
   }
 
   // Returns true when the command should end.

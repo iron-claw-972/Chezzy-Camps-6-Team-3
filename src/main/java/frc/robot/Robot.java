@@ -14,10 +14,8 @@ import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.ShuffleboardManager;
-import lib.controllers.GameController;
-import lib.controllers.GameController.Button;
-import lib.controllers.GameController.Axis;
-import frc.robot.controls.Driver;
+import frc.robot.commands.ArcadeDrive1;
+
 
 
 /**
@@ -30,8 +28,9 @@ public class Robot extends TimedRobot {
   private Command m_autoCommand;
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
-  public static Drivetrain d = new Drivetrain();
-  public Driver dr = new Driver();
+  public static Drivetrain drive = new Drivetrain();
+  public static Driver dr = new Driver();
+  
   Joystick controller = new Joystick(0);
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -39,8 +38,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
-    new ArcadeDrive1(Robot.d);
+      
+    
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -49,6 +48,10 @@ public class Robot extends TimedRobot {
 
     Driver.configureControls();
     Operator.configureControls();
+
+    drive.setDefaultCommand(
+      new ArcadeDrive1(drive)
+    );
   }
 
   

@@ -12,11 +12,11 @@ public class Driver {
   public static void configureControls() {
     driver.get(Button.A).whenPressed(new DoNothing());
   }
-  public static double getRawThrottleValue() {
+  public double getRawThrottleValue() {
     return driver.get(Axis.LEFT_Y);
   }
 
-  public static double getRawTurnValue() {
+  public double getRawTurnValue() {
     return driver.get(Axis.RIGHT_X);
   }
 
