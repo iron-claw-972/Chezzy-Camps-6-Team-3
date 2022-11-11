@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
     m_rightMotor2 = MotorFactory.createTalonFX(Constants.drive.kRightMotor2);
 
-    m_rightMotor1.setInverted(true);
+    //m_rightMotor1.setInverted(true);
 
 
   }
@@ -50,12 +50,12 @@ public class Drivetrain extends SubsystemBase {
 
   public double averageLeftPosition()
   {
-      return(m_leftMotor1.getSelectedSensorPosition();
+      return(m_leftMotor1.getSelectedSensorPosition());
   }
 
   public double averageRightPosition()
   {
-      return(m_rightMotor1.getSelectedSensorPosition();
+      return(m_rightMotor1.getSelectedSensorPosition());
   }
   public double averagePosition()
   {

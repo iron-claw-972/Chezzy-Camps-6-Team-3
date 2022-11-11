@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain drive = new Drivetrain();
   public static Driver dr = new Driver();
   
-  Joystick controller = new Joystick(0);
+  //Joystick controller = new Joystick(0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -51,8 +51,9 @@ public class Robot extends TimedRobot {
     Operator.configureControls();
 
     drive.setDefaultCommand(
-      //new ArcadeDrive1(drive)
-      new RunCommand(() -> drive.arcadeDrive(0.1, 0))
+    //new ArcadeDrive1(drive)
+     
+      new RunCommand(() -> drive.arcadeDrive(0.1, 0), drive)
     );
   }
 
