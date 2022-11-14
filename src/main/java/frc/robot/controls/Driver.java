@@ -12,8 +12,10 @@ public class Driver {
 
   public static void configureControls() {
     // driver.get(Button.A).whenPressed(new DoNothing());
-    driver.get(Button.START).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(0.1)));
-    driver.get(Button.START).whenReleased(new InstantCommand(() -> Robot.intake.setMotor(0)));
+    driver.get(Button.A).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(0.1)));
+    driver.get(Button.A).whenReleased(new InstantCommand(() -> Robot.intake.setMotor(0)));
+    driver.get(Button.B).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(0.2)));
+    driver.get(Button.B).whenReleased(new InstantCommand(() -> Robot.intake.setMotor(0)));
 
   }
 
