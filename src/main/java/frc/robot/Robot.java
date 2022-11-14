@@ -40,7 +40,6 @@ public class Robot extends TimedRobot {
   public void robotInit(
   ) {
       
-    
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -51,12 +50,12 @@ public class Robot extends TimedRobot {
     Operator.configureControls();
 
     drive.setDefaultCommand(
-    //new ArcadeDrive1(drive)
+       //new ArcadeDrive1(drive)
      
-      new RunCommand(() -> drive.arcadeDrive(0.1, 0), drive)
+      new RunCommand(() -> drive.arcadeDrive(Robot.dr.getRawThrottleValue(), Robot.dr.getRawTurnValue()), drive)
     );
   }
-
+  
   
 
   /**

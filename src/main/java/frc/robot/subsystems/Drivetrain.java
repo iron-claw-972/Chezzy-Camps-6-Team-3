@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
     m_rightMotor2 = MotorFactory.createTalonFX(Constants.drive.kRightMotor2);
 
-    //m_rightMotor1.setInverted(true);
+    m_rightMotor1.setInverted(true);
 
 
   }
@@ -61,6 +61,12 @@ public class Drivetrain extends SubsystemBase {
   {
       return(m_leftMotor1.getSelectedSensorPosition() + m_rightMotor1.getSelectedSensorPosition());
   }
+  public void stopMotors()
+  {
+    m_leftMotor1.set(0);
+    m_rightMotor1.set(0);
+  }
+ 
 
   
 
@@ -73,7 +79,7 @@ public class Drivetrain extends SubsystemBase {
    * @param turn the commanded turn rotation
    */
   public void arcadeDrive(double throttle, double turn) {
-    m_leftMotor1.set((throttle - turn)*0.5);
-    m_rightMotor1.set((throttle - turn)*0.5);
+    m_leftMotor1.set((throttle-turn*0.5));
+    m_rightMotor1.set((throttle+turn)*0.5);
   }
 }
