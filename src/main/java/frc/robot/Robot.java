@@ -14,6 +14,7 @@ import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Output;
 import frc.robot.util.ShuffleboardManager;
 
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
   public static Drivetrain drive = new Drivetrain();
   public static Intake intake = new Intake();
+  public static Conveyor conveyor = new Conveyor();
   public static Output output = new Output();
   
   /**
