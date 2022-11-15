@@ -34,8 +34,10 @@ public class Drivetrain extends SubsystemBase {
   DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(26.0));
   ChassisSpeeds chassisSpeeds = new ChassisSpeeds(2.0, 0, 1.0);
   DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+  // the GYRO
   AHRS ahrs = new AHRS(SPI.Port.kMXP);
-  DifferentialDriveOdometry m_odometry = new DifferentialDriveOdometry(ahrs.getRotation2d());
+  DifferentialDriveOdometry m_odometry;
+  //Starting position
   Pose2d m_pose2d = new Pose2d(1,1,ahrs.getRotation2d());
   double leftVelocity = wheelSpeeds.leftMetersPerSecond;
   double rightVelocity = wheelSpeeds.rightMetersPerSecond;
@@ -44,10 +46,10 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
     m_rightMotor1 = MotorFactory.createTalonFX(Constants.drive.kRightMotor1);
     m_rightMotor2 = MotorFactory.createTalonFX(Constants.drive.kRightMotor2);
-
     m_leftMotor2.follow(m_leftMotor1);
     m_rightMotor2.follow(m_rightMotor1);
-    
+    m_rightMotor1.configSelectedFeedbackCoefficient(Constants.drive.ConversionDistanceMeters);
+    m_odometry=new DifferentialDriveOdometry(ahrs.getRotation2d());
   }
 
   /**
@@ -58,9 +60,7 @@ public class Drivetrain extends SubsystemBase {
    */
   @Override
    public void periodic(){
-    var gyroAngle = Rotation2d.fromDegrees(ahrs.getAngle());
-    //need encoder values to meter
-    // m_pose = m_odometry.update(gyroAngle, m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    m_odometry.update(ahrs.getRotation2d(), getleftEncoderdistanceMeters(), getRightEncoderdistanceMeters());
 
   }
    public void tankDrive(double leftPower, double rightPower) {
@@ -80,9 +80,48 @@ public class Drivetrain extends SubsystemBase {
   }
   public double getleftEncoderdistanceMeters(){
 
-    double distanceinches=m_leftMotor1.getSelectedSensorPosition()*2048*12/62*4;
+    double distanceinches=m_leftMotor1.getSelectedSensorPosition()*2048*12/62*4*Math.PI;
     return Units.inchesToMeters(distanceinches);
 
 
   }
+  public double getRightEncoderdistanceMeters(){
+
+    double distanceinches=m_rightMotor1.getSelectedSensorPosition()*2048*12/62*4*Math.PI;
+    return Units.inchesToMeters(distanceinches);
+
+
+  }
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+  public void resetEncoders() {
+    m_rightMotor1.setSelectedSensorPosition(0.0);
+    m_leftMotor1.setSelectedSensorPosition(0.0);
+
+  }
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_odometry.resetPosition(pose, ahrs.getRotation2d());
+  }
+  public double getAverageEncoderDistance() {
+    return ( getleftEncoderdistanceMeters()+ getRightEncoderdistanceMeters()) / 2.0;
+  }
+  public double getleftencodervalue(){
+    return m_leftMotor1.getSelectedSensorPosition();
+  }
+  public double getrightencodervalue(){
+    return m_rightMotor1.getSelectedSensorPosition();
+  }
+  public double getHeading() {
+    return ahrs.getRotation2d().getDegrees();
+  }
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_rightMotor1.getSelectedSensorVelocity(), m_leftMotor1.getSelectedSensorVelocity());
+  }
+  public DifferentialDriveKinematics getDifferentialDriveWheelSpeeds(){
+
+    return kinematics;
+  }
 }
+
