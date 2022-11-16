@@ -9,6 +9,7 @@ public final class Constants {
   public static final AutoConstants auto = new AutoConstants();
   public static final int OuttakePort = -1;
   public static final int IntakePort = -1;
+  public static final int ConveyorPort = -1;
 
 
 }
