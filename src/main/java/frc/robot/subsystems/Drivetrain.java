@@ -26,11 +26,12 @@ public class Drivetrain extends SubsystemBase {
   
 
   PIDController m_pid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
-  
+  PIDController m_Vpid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
   boolean pidOn = true;
   double sp = 1000;
 
   public Drivetrain() {
+    m_pid.setTolerance(5, 10);
     m_leftMotor1 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor1);
     m_rightMotor1 = MotorFactory.createTalonFX(Constants.drive.kRightMotor1);
     m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
@@ -132,7 +133,7 @@ public class Drivetrain extends SubsystemBase {
   }
   public void enable(boolean enable)
   {
-      enable = pidOn;
+      pidOn = enable; 
   }
   public void reset()
   {
@@ -141,4 +142,9 @@ public class Drivetrain extends SubsystemBase {
   public boolean getPidone(){
     return m_pid.atSetpoint();
   }
+  public void PID(double targetVelocity)
+    {
+        double currentVelocity = m_leftMotor1.getSelectedSensorVelocity();
+
+    }
 }
