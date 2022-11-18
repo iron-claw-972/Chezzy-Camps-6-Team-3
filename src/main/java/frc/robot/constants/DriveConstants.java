@@ -13,7 +13,6 @@ public class DriveConstants {
   public final double ksVolts = 12;
   public final double kvVoltSecondsPerMeter = 0;
   public final double kaVoltSecondsSquaredPerMeter = 0;
-  public final int kDriveKinematics = 0;
-  public final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(26.0));
+  public final double kPDriveVel = 0;
 
 }

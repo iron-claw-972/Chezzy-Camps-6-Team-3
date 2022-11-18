@@ -119,9 +119,10 @@ public class Drivetrain extends SubsystemBase {
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_rightMotor1.getSelectedSensorVelocity(), m_leftMotor1.getSelectedSensorVelocity());
   }
-  public DifferentialDriveKinematics getDifferentialDriveWheelSpeeds(){
+  public DifferentialDriveKinematics getDifferentialDriveKinematics(){
 
     return kinematics;
   }
+ 
 }
 
