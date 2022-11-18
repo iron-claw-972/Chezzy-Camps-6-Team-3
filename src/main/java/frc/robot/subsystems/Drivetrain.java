@@ -142,9 +142,5 @@ public class Drivetrain extends SubsystemBase {
   public boolean getPidone(){
     return m_pid.atSetpoint();
   }
-  public void PID(double targetVelocity)
-    {
-        double currentVelocity = m_leftMotor1.getSelectedSensorVelocity();
-
-    }
+  
 }
