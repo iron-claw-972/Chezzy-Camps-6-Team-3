@@ -50,7 +50,7 @@ public class PathweaverCommand extends SequentialCommandGroup {
         // Apply the voltage constraint
         .addConstraint(autoVoltageConstraint);
 
-        PathPlannerTrajectory examplePath = PathPlanner.loadPath("ExamplePath", new PathConstrains(4, 3));
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("ExamplePath", new PathConstraints(4, 3));
 
            
             
