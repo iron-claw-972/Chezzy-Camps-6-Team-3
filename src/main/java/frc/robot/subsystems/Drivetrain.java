@@ -39,7 +39,8 @@ public class Drivetrain extends SubsystemBase {
 
   PIDController m_pid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
   PIDController m_Vpid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
-  boolean pidOn = true;
+  boolean pidOn = false;
+  boolean vpidOn = false;
   double sp = 1000;
 
   DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(26.0));
@@ -78,8 +79,34 @@ public class Drivetrain extends SubsystemBase {
    * @param leftPower the commanded power to the left motors
    * @param rightPower the commanded power to the right motors
    */
+ 
+  public void Vpid(double targetVelocity)
+  {
+    if(vpidOn == true)
+    {
+        m_leftMotor1.set(m_Vpid.calculate(m_leftMotor1.getSelectedSensorVelocity(), targetVelocity ));
+        m_rightMotor1.set(m_Vpid.calculate(m_rightMotor1.getSelectedSensorVelocity(), targetVelocity));
+    }
+    else
+    {
+        m_leftMotor1.stopMotor();
+        m_rightMotor1.stopMotor();
+    }
+  }
   @Override
-   public void periodic(){
+   public void periodic()
+   {
+    if(pidOn == true)
+    {
+        m_leftMotor1.set(m_pid.calculate(m_leftMotor1.getSelectedSensorPosition(), sp));
+        m_rightMotor1.set(m_pid.calculate(m_rightMotor1.getSelectedSensorPosition(), sp));
+    }
+    else
+    {
+        m_leftMotor1.stopMotor();
+        m_rightMotor1.stopMotor();
+    }
+    
     m_odometry.update(ahrs.getRotation2d(), getleftEncoderdistanceMeters(), getRightEncoderdistanceMeters());
 
   }
@@ -106,22 +133,8 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor1.set(0);
     m_rightMotor1.set(0);
   }
-  @Override
-  public void periodic() {
-    // TODO 4.1: Periodic runs periodically, so we will update the PID here and set the motors. 
-    if(pidOn == true)
-    {
-        m_leftMotor1.set(m_pid.calculate(m_leftMotor1.getSelectedSensorPosition(), sp));
-        m_rightMotor1.set(m_pid.calculate(m_rightMotor1.getSelectedSensorPosition(), sp));
-    }
-    else
-    {
-        m_leftMotor1.stopMotor();
-        m_rightMotor1.stopMotor();
-    }
-    // If the pid is enabled (a boolean value declared above) then you should set the motors using the pid's calculate() function. Otherwise, it should set the motor power to zero.
-    // pid.calculate() takes two values: calculate(processVariable, setpoint). get the process var by getting the encoders, and the setpoint is a variable declared above.
-  }
+  
+  
 
   
 
@@ -133,6 +146,7 @@ public class Drivetrain extends SubsystemBase {
    * @param forward the commanded forward movement
    * @param turn the commanded turn rotation
    */
+  
   public void arcadeDrive(double throttle, double turn) {
     m_leftMotor1.set((throttle-turn*0.5));
     m_rightMotor1.set((throttle+turn)*0.5);
@@ -225,6 +239,7 @@ public class Drivetrain extends SubsystemBase {
 
     return kinematics;
   }
+
  
 
 }
