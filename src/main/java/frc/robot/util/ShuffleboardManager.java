@@ -8,17 +8,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.robot.commands.PIDCommand;
+import frc.robot.subsystems.Drivetrain;
+
 
 public class ShuffleboardManager {
 
+  Drivetrain drive = new Drivetrain();
   SendableChooser<Command> m_autoCommand = new SendableChooser<>();
 
+  
   ShuffleboardTab m_mainTab = Shuffleboard.getTab("Main");
   ShuffleboardTab m_autoTab = Shuffleboard.getTab("Auto");
 
   NetworkTableEntry m_commandScheduler = m_mainTab.add("Command Scheduler", "NULL").getEntry();
+  NetworkTableEntry autoWait = m_autoTab.add("Auto Wait", 0.0).getEntry();
+  
   
   public void setup() {
+    m_autoCommand.addOption("PIDCommand", new PIDCommand(drive));
+    m_autoTab.add("Auto Chooser", m_autoCommand);
+    m_autoCommand.getSelected();
     LiveWindow.disableAllTelemetry(); // LiveWindow is causing periodic loop overruns
 
     chooserUpdate();

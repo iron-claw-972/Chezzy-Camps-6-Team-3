@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
