@@ -9,6 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+
+import java.util.function.BiConsumer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -119,10 +122,21 @@ public class Drivetrain extends SubsystemBase {
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_rightMotor1.getSelectedSensorVelocity(), m_leftMotor1.getSelectedSensorVelocity());
   }
+  public DifferentialDriveWheelSpeeds GetDifferentialDriveWheelSpeeds() {
+    return wheelSpeeds;
+  }
+  public Pose2d getpose2d() {
+    return m_pose2d;
+  }
   public DifferentialDriveKinematics getDifferentialDriveKinematics(){
 
     return kinematics;
   }
- 
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_leftMotor1.setVoltage(leftVolts);
+    m_rightMotor1.setVoltage(rightVolts);
+    //m_drive.feed();?
+  }
+
 }
 
