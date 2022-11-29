@@ -14,6 +14,7 @@ import java.util.function.BiConsumer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -44,6 +45,9 @@ public class Drivetrain extends SubsystemBase {
   Pose2d m_pose2d = new Pose2d(1,1,ahrs.getRotation2d());
   double leftVelocity = wheelSpeeds.leftMetersPerSecond;
   double rightVelocity = wheelSpeeds.rightMetersPerSecond;
+  PIDController m_pidLeft = new PIDController(0, 0, 0);
+  PIDController m_pidRight = new PIDController(0, 0, 0);
+
   public Drivetrain() {
     m_leftMotor1 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor1);
     m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
