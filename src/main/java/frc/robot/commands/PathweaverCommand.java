@@ -22,6 +22,7 @@ import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.constants.Constants;
@@ -58,6 +59,9 @@ public class PathweaverCommand extends SequentialCommandGroup {
       )
     );
 
+
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("ExamplePath", new PathConstraints(4, 3));
+
         
 
         
@@ -68,6 +72,35 @@ public class PathweaverCommand extends SequentialCommandGroup {
     }
 
  
+ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+    // in your code that will be used by all path following commands.
+    
+    return new SequentialCommandGroup(
+        new InstantCommand(() -> {
+          // Reset odometry for the first path you run during auto
+          if(isFirstPath){
+              m_drive.resetOdometry(traj.getInitialPose());
+          }
+        }),
+        new PPRamseteCommand(
+            traj, 
+            m_drive.getPose(), // Pose supplier
+            new RamseteController(),
+            new SimpleMotorFeedforward(KS, KV, KA),
+            m_drive.getDifferentialDriveKinematics(), // DifferentialDriveKinematics
+            m_drive.getWheelSpeeds(), // DifferentialDriveWheelSpeeds supplier
+            new PIDController(0, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+            new PIDController(0, 0, 0), // Right controller (usually the same values as left controller)
+            this::outputVolts, // Voltage biconsumer
+            eventMap, // This argument is optional if you don't use event markers
+            this // Requires this drive subsystem
+        )
+    );
+}
 
- }  
+}
+
+
+
  
+
