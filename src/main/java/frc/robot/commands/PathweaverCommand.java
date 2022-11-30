@@ -52,8 +52,8 @@ public class PathweaverCommand extends SequentialCommandGroup {
           new SimpleMotorFeedforward(Constants.drive.ksVolts, Constants.drive.kvVoltSecondsPerMeter, Constants.drive.kaVoltSecondsSquaredPerMeter),
           m_drive.getDifferentialDriveKinematics(), // DifferentialDriveKinematics
           () -> m_drive.getWheelSpeeds(), // DifferentialDriveWheelSpeeds supplier
-          new PIDController(0, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-          new PIDController(0, 0, 0), // Right controller (usually the same values as left controller)
+          m_drive.getLeftPid(), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+          m_drive.getRightPid(), // Right controller (usually the same values as left controller)
           (a, b) -> m_drive.tankDriveVolts(a, b), // Voltage biconsumer
           m_drive // Requires this drive subsystem
       )
