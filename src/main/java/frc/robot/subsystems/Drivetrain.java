@@ -49,13 +49,13 @@ public class Drivetrain extends SubsystemBase {
   double sp = 1000;
 
   DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(26.0));
-  ChassisSpeeds chassisSpeeds = new ChassisSpeeds(2.0, 0, 1.0);
+  ChassisSpeeds chassisSpeeds = new ChassisSpeeds(2.0, 0, 1.0); // check these
   DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
   // the GYRO
   AHRS ahrs = new AHRS(SPI.Port.kMXP);
   DifferentialDriveOdometry m_odometry;
   //Starting position
-  Pose2d m_pose2d = new Pose2d(1,1,ahrs.getRotation2d());
+  Pose2d m_pose2d = new Pose2d(0.63,3.03,ahrs.getRotation2d());
   double leftVelocity = wheelSpeeds.leftMetersPerSecond;
   double rightVelocity = wheelSpeeds.rightMetersPerSecond;
 
