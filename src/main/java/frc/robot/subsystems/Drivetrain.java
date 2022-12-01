@@ -42,7 +42,8 @@ public class Drivetrain extends SubsystemBase {
 
   
 
-  PIDController m_pid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
+  PIDController m_leftPid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
+  PIDController m_rightPid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
   PIDController m_Vpid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
   boolean pidOn = false;
   boolean vpidOn = false;
@@ -60,7 +61,8 @@ public class Drivetrain extends SubsystemBase {
   double rightVelocity = wheelSpeeds.rightMetersPerSecond;
 
   public Drivetrain() {
-    m_pid.setTolerance(5, 10);
+    m_leftPid.setTolerance(5, 10);
+    m_rightPid.setTolerance(5, 10);
     m_leftMotor1 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor1);
     m_rightMotor1 = MotorFactory.createTalonFX(Constants.drive.kRightMotor1);
     m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
@@ -103,8 +105,8 @@ public class Drivetrain extends SubsystemBase {
    {
     if(pidOn == true)
     {
-        m_leftMotor1.set(m_pid.calculate(m_leftMotor1.getSelectedSensorPosition(), sp));
-        m_rightMotor1.set(m_pid.calculate(m_rightMotor1.getSelectedSensorPosition(), sp));
+        m_leftMotor1.set(m_leftPid.calculate(m_leftMotor1.getSelectedSensorPosition(), sp));
+        m_rightMotor1.set(m_rightPid.calculate(m_rightMotor1.getSelectedSensorPosition(), sp));
     }
     else
     {
@@ -192,10 +194,11 @@ public class Drivetrain extends SubsystemBase {
   }
   public void reset()
   {
-    m_pid.reset();
+    m_leftPid.reset();
+    m_rightPid.reset();
   }
   public boolean getPidone(){
-    return m_pid.atSetpoint();
+    return m_leftPid.atSetpoint();
   }
   
 
@@ -250,10 +253,8 @@ public class Drivetrain extends SubsystemBase {
 
     return kinematics;
   }
-  public PIDCommand getLeftPID(){
+  
 
-    return 
-  }
 
  
 
@@ -261,6 +262,18 @@ public class Drivetrain extends SubsystemBase {
     m_leftMotor1.setVoltage(leftVolts);
     m_rightMotor1.setVoltage(rightVolts);
     //m_drive.feed();?
+  }
+
+  public PIDController getLeftPid() {
+    return m_leftPid;
+  }
+
+  public PIDController getRightPid() {
+    return m_rightPid;
+  }
+
+  public PIDController getVpid() {
+    return m_Vpid;
   }
 
 }
