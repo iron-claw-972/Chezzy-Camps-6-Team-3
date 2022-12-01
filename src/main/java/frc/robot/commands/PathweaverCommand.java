@@ -30,10 +30,11 @@ import frc.robot.subsystems.Drivetrain;
 
 public class PathweaverCommand extends SequentialCommandGroup {
     Drivetrain m_drive;
-    public PathweaverCommand(String filename, Drivetrain drive){
-       this(drive, PathPlanner.loadPath(filename, new PathConstraints(4, 3)), true);
+    public PathweaverCommand(String filename, Drivetrain drive, Boolean firstPath){
+       this(drive, PathPlanner.loadPath(filename, new PathConstraints(4, 3)), firstPath);
 
     }
+
     public PathweaverCommand(Drivetrain drive,PathPlannerTrajectory traj, boolean isFirstPath){
         m_drive=drive;
        
@@ -72,33 +73,10 @@ public class PathweaverCommand extends SequentialCommandGroup {
     }
 
  
- public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
-    // in your code that will be used by all path following commands.
-    
-    return new SequentialCommandGroup(
-        new InstantCommand(() -> {
-          // Reset odometry for the first path you run during auto
-          if(isFirstPath){
-              m_drive.resetOdometry(traj.getInitialPose());
-          }
-        }),
-        new PPRamseteCommand(
-            traj, 
-            m_drive.getPose(), // Pose supplier
-            new RamseteController(),
-            new SimpleMotorFeedforward(KS, KV, KA),
-            m_drive.getDifferentialDriveKinematics(), // DifferentialDriveKinematics
-            m_drive.getWheelSpeeds(), // DifferentialDriveWheelSpeeds supplier
-            new PIDController(0, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-            new PIDController(0, 0, 0), // Right controller (usually the same values as left controller)
-            this::outputVolts, // Voltage biconsumer
-            eventMap, // This argument is optional if you don't use event markers
-            this // Requires this drive subsystem
-        )
-    );
+ 
 }
 
-}
+
 
 
 
