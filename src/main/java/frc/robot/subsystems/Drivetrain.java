@@ -12,11 +12,13 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import java.io.FileFilter;
 import java.util.function.BiConsumer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -41,6 +43,7 @@ public class Drivetrain extends SubsystemBase {
   private final WPI_TalonFX m_rightMotor2;
 
   
+  SlewRateLimiter filter = new SlewRateLimiter(0.5);
 
   PIDController m_leftPid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
   PIDController m_rightPid = new PIDController(Constants.drive.kP,Constants.drive.kI, Constants.drive.kD);
@@ -155,8 +158,8 @@ public class Drivetrain extends SubsystemBase {
    */
   
   public void arcadeDrive(double throttle, double turn) {
-    m_leftMotor1.set((throttle-turn*0.5));
-    m_rightMotor1.set((throttle+turn)*0.5);
+    m_leftMotor1.set((filter.calculate(throttle)-turn*0.5));
+    m_rightMotor1.set((filter.calculate(throttle)+turn)*0.5);
   }
   
   public void zero()

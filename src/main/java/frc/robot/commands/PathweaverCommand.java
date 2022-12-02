@@ -61,7 +61,6 @@ public class PathweaverCommand extends SequentialCommandGroup {
     );
 
 
-        PathPlannerTrajectory examplePath = PathPlanner.loadPath("ExamplePath", new PathConstraints(4, 3));
 
         
 
