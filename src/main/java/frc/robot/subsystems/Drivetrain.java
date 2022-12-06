@@ -39,8 +39,6 @@ public class Drivetrain extends SubsystemBase {
 
   private final WPI_TalonFX m_leftMotor1;
   private final WPI_TalonFX m_rightMotor1;
-  private final WPI_TalonFX m_leftMotor2;
-  private final WPI_TalonFX m_rightMotor2;
 
   
   SlewRateLimiter filter = new SlewRateLimiter(0.5);
@@ -68,16 +66,14 @@ public class Drivetrain extends SubsystemBase {
     m_rightPid.setTolerance(5, 10);
     m_leftMotor1 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor1);
     m_rightMotor1 = MotorFactory.createTalonFX(Constants.drive.kRightMotor1);
-    m_leftMotor2 = MotorFactory.createTalonFX(Constants.drive.kLeftMotor2);
-    m_rightMotor2 = MotorFactory.createTalonFX(Constants.drive.kRightMotor2);
-
+   
+   
 
     m_rightMotor1.setInverted(true);
 
 
 
-    m_leftMotor2.follow(m_leftMotor1);
-    m_rightMotor2.follow(m_rightMotor1);
+    
     m_rightMotor1.configSelectedFeedbackCoefficient(Constants.drive.ConversionDistanceMeters);
     m_odometry=new DifferentialDriveOdometry(ahrs.getRotation2d());
 
