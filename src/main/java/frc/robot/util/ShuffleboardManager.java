@@ -40,7 +40,7 @@ public class ShuffleboardManager {
 
     chooserUpdate();
 
-    // m_autoTab.add("Auto Chooser", m_autoCommand);
+    
   }
 
   public Command getAutonomousCommand() {
