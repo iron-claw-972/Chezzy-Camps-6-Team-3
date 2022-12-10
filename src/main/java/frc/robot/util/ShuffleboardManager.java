@@ -30,8 +30,12 @@ public class ShuffleboardManager {
 
     m_autoTab.add("Auto Chooser", m_autoCommand);
 
-    m_mainTab.add("Start Intake", new InstantCommand(() -> Robot.intake.setMotor(0.1)));
-    m_mainTab.add("Stop Intake", new InstantCommand(() -> Robot.intake.setMotor(0.0)));
+    // m_mainTab.add("Start Intake", new InstantCommand(() -> Robot.intake.setMotor(0.1)));
+    // m_mainTab.add("Stop Intake", new InstantCommand(() -> Robot.intake.setMotor(0.0)));
+
+    m_mainTab.addBoolean("Intake Status", () -> Robot.intake.intakeOn);
+    m_mainTab.addBoolean("Outtake Status", () -> Robot.output.outputOn);
+    m_mainTab.addBoolean("Conveyor Status", () -> Robot.conveyor.conveyorOn);
     
     // m_mainTab.addBoolean("Intake running: ", setIntakeStatus(intakeOn));
   }
@@ -42,16 +46,6 @@ public class ShuffleboardManager {
 
   public void chooserUpdate() {
     m_autoCommand.addOption("Do Nothing", new PrintCommand("This will do nothing!"));
-  }
-
-  public BooleanSupplier setIntakeStatus(boolean intakeOn) {
-    return () -> intakeOn;
-  }
-
-  public void setOuttakeStatus(boolean outtakeOn) {
-    BooleanSupplier outtakeStatus = () -> outtakeOn;
-
-    m_mainTab.addBoolean("Outtake running: ", outtakeStatus);
   }
 
   public void loadCommandSchedulerShuffleboard(){

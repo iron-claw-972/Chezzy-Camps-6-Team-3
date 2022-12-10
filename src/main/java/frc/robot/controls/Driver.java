@@ -11,15 +11,18 @@ public class Driver {
   private static GameController driver = new GameController(Constants.oi.kDriverJoy);
 
   public static void configureControls() {
-    // driver.get(Button.A).whenPressed(new DoNothing());
     driver.get(Button.A).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(0.1)));
     driver.get(Button.A).whenReleased(new InstantCommand(() -> Robot.intake.setMotor(0)));
     driver.get(Button.B).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(-0.1)));
     driver.get(Button.B).whenReleased(new InstantCommand(() -> Robot.intake.setMotor(0)));
+    
     driver.get(Button.X).whenPressed(new InstantCommand(() -> Robot.output.setMotor(0.1)));
     driver.get(Button.X).whenReleased(new InstantCommand(() -> Robot.output.setMotor(0)));
     driver.get(Button.Y).whenPressed(new InstantCommand(() -> Robot.output.setMotor(-0.1)));
     driver.get(Button.Y).whenReleased(new InstantCommand(() -> Robot.output.setMotor(0)));
+
+    driver.get(Button.LB).whenPressed(new InstantCommand(() -> Robot.conveyor.setMotor(0.1)));
+    driver.get(Button.LB).whenReleased(new InstantCommand(() -> Robot.conveyor.setMotor(0.0)));
 
   }
 
