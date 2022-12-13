@@ -1,6 +1,7 @@
 package frc.robot.util;
 
 import com.pathplanner.lib.PathPlannerTrajectory;
+import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -9,12 +10,15 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.PIDCommand;
 import frc.robot.commands.PathweaverCommand;
 import frc.robot.subsystems.Drivetrain;
 
+import frc.robot.Robot;
+import frc.robot.subsystems.Intake;
 
 public class ShuffleboardManager {
 
@@ -73,7 +77,16 @@ public class ShuffleboardManager {
 
     chooserUpdate();
 
+    m_autoTab.add("Auto Chooser", m_autoCommand);
+
+    // m_mainTab.add("Start Intake", new InstantCommand(() -> Robot.intake.setMotor(0.1)));
+    // m_mainTab.add("Stop Intake", new InstantCommand(() -> Robot.intake.setMotor(0.0)));
+
+    m_mainTab.addBoolean("Intake Status", () -> Robot.intake.intakeOn);
+    m_mainTab.addBoolean("Outtake Status", () -> Robot.output.outputOn);
+    m_mainTab.addBoolean("Conveyor Status", () -> Robot.conveyor.conveyorOn);
     
+    // m_mainTab.addBoolean("Intake running: ", setIntakeStatus(intakeOn));
   }
 
   public Command getAutonomousCommand() {
@@ -89,5 +102,6 @@ public class ShuffleboardManager {
     CommandScheduler.getInstance().onCommandInterrupt(command -> m_commandScheduler.setString(command.getName() + " interrupted."));
     CommandScheduler.getInstance().onCommandFinish(command -> m_commandScheduler.setString(command.getName() + " finished."));
   }
+
 
 }
