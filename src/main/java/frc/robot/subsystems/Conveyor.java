@@ -11,5 +11,6 @@ public class Conveyor extends SubsystemBase {
     CANSparkMax conveyor_motor = new CANSparkMax(Constants.ConveyorPort, MotorType.kBrushless);
     public void setMotor(double power) {
         conveyor_motor.set(power);
+        
     }
 }
