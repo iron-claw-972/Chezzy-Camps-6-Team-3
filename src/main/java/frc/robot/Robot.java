@@ -5,12 +5,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.controls.Driver;
 import frc.robot.controls.Operator;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.ShuffleboardManager;
+import frc.robot.commands.ArcadeDrive1;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,12 +28,17 @@ public class Robot extends TimedRobot {
   private Command m_autoCommand;
   public static ShuffleboardManager shuffleboard = new ShuffleboardManager();
 
+  public static Drivetrain drive = new Drivetrain();
+  public static Driver dr = new Driver();
+  
+  //Joystick controller = new Joystick(0);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+      
 
     // This is really annoying so it's disabled
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -36,7 +47,15 @@ public class Robot extends TimedRobot {
 
     Driver.configureControls();
     Operator.configureControls();
+
+    drive.setDefaultCommand(
+       //new ArcadeDrive1(drive)
+     
+      new RunCommand(() -> drive.arcadeDrive(Robot.dr.getRawThrottleValue(), Robot.dr.getRawTurnValue()), drive)
+    );
   }
+  
+  
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -80,8 +99,9 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during autonomous.
    */
-  @Override
+  @Override  
   public void autonomousPeriodic() {
+
   }
 
   @Override
@@ -93,6 +113,7 @@ public class Robot extends TimedRobot {
     if (m_autoCommand != null) {
       m_autoCommand.cancel();
     }
+    
   }
 
   /**
@@ -100,6 +121,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+  
   }
 
   @Override
@@ -113,6 +135,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
 
   /**
