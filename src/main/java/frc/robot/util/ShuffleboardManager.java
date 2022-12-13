@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.PIDCommand;
 import frc.robot.commands.PathweaverCommand;
 import frc.robot.subsystems.Drivetrain;
@@ -29,11 +30,23 @@ public class ShuffleboardManager {
   
   
   public void setup() {
+
+    SequentialCommandGroup autoPaths = new SequentialCommandGroup(
+      new PathweaverCommand("1_All dots path", drive, true), 
+      new PathweaverCommand("2_Reverse", drive, false),
+      new PathweaverCommand("3_All the points forward", drive, false),
+      new PathweaverCommand("4_All the points back", drive, false)
+    );
+
     m_autoCommand.addOption("PIDCommand", new PIDCommand(drive));
     m_autoCommand.addOption("1_All dots path", new PathweaverCommand("1_All dots path", drive, true));
     m_autoCommand.addOption("2_Reverse", new PathweaverCommand("2_Reverse", drive, false));
     m_autoCommand.addOption("3_All the points forward", new PathweaverCommand("3_All the points forward", drive, false));
     m_autoCommand.addOption("4_All the points back", new PathweaverCommand("4_All the points back", drive, false));
+    m_autoCommand.addOption("Full Path",autoPaths);
+
+
+
     m_autoTab.add("Auto Chooser", m_autoCommand);
     m_autoCommand.getSelected();
     LiveWindow.disableAllTelemetry(); // LiveWindow is causing periodic loop overruns
