@@ -8,17 +8,17 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
 import frc.robot.util.MotorFactory;
 
-
 public class Drivetrain extends SubsystemBase {
 
   private final WPI_TalonFX m_leftMotor1;
   private final WPI_TalonFX m_leftMotor2;
-  
+
   private final WPI_TalonFX m_rightMotor1;
   private final WPI_TalonFX m_rightMotor2;
 
@@ -34,8 +34,10 @@ public class Drivetrain extends SubsystemBase {
 
   /**
    * Drives the robot using tank drive controls
-   * Tank drive is slightly easier to code but less intuitive to control, so this is here as an example for now
-   * @param leftPower the commanded power to the left motors
+   * Tank drive is slightly easier to code but less intuitive to control, so this
+   * is here as an example for now
+   * 
+   * @param leftPower  the commanded power to the left motors
    * @param rightPower the commanded power to the right motors
    */
   public void tankDrive(double leftPower, double rightPower) {
@@ -47,8 +49,18 @@ public class Drivetrain extends SubsystemBase {
    * Drives the robot using arcade controls.
    *
    * @param forward the commanded forward movement
-   * @param turn the commanded turn rotation
+   * @param turn    the commanded turn rotation
    */
+  public double leftEncodersPosition() {
+    return m_leftMotor1.getSelectedSensorPosition();
+
+  }
+
+  public double rightEndcodersPosition() {
+    return m_rightMotor1.getSelectedSensorPosition();
+
+  }
+
   public void arcadeDrive(double throttle, double turn) {
     m_leftMotor1.set(ControlMode.PercentOutput, throttle + turn);
     m_rightMotor1.set(ControlMode.PercentOutput, throttle - turn);

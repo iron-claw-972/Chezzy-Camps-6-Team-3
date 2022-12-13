@@ -11,5 +11,4 @@ public final class Constants {
   public static final int IntakePort = 3;
   public static final int ConveyorPort = -1;
 
-
 }

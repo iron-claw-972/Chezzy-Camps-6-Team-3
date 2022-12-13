@@ -6,6 +6,9 @@ import frc.robot.commands.DoNothing;
 import frc.robot.constants.Constants;
 import lib.controllers.GameController;
 import lib.controllers.GameController.Button;
+import lib.controllers.GameController.Axis;
+
+// SlewRateLimiter filter=new SlewRateLimiter(0.5);
 
 public class Driver {
   private static GameController driver = new GameController(Constants.oi.kDriverJoy);
@@ -23,4 +26,11 @@ public class Driver {
 
   }
 
+  public static double getLeftPower() {
+    return driver.get(Axis.LEFT_Y);
+  }
+
+  public static double getRightPower() {
+    return driver.get(Axis.RIGHT_Y);
+  }
 }
