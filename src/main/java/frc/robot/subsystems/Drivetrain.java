@@ -50,7 +50,7 @@ public class Drivetrain extends SubsystemBase {
   boolean vpidOn = false;
   double sp = 1000;
 
-  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(26.0));
+  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(24.79));
   ChassisSpeeds chassisSpeeds = new ChassisSpeeds(2.0, 0, 1.0); // check these
   DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
   // the GYRO

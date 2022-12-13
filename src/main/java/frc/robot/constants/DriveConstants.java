@@ -20,9 +20,9 @@ public class DriveConstants {
   public double vkI = 0.0;
   public double vkD = 0.0;
 
-  public final double ConversionDistanceMeters = Units.inchesToMeters(2) *2*Math.PI*2048*12/62;
-  public final double ksVolts = 12;
-  public final double kvVoltSecondsPerMeter = 0;
+  public final double ConversionDistanceMeters = Units.inchesToMeters(2) *2*Math.PI*2048*62/8;
+  public final double ksVolts = 0.5523;
+  public final double kvVoltSecondsPerMeter = 2.6087;
   public final double kaVoltSecondsSquaredPerMeter = 0;
   public final double kPDriveVel = 0;
 

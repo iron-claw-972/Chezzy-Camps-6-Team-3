@@ -37,8 +37,7 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit(
-  ) {
+  public void robotInit() {
       
 
     // This is really annoying so it's disabled
