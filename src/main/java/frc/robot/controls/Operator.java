@@ -1,7 +1,6 @@
 package frc.robot.controls;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.commands.DoNothing;
 import frc.robot.constants.Constants;
 import frc.robot.util.ShuffleboardManager;
 import frc.robot.Robot;
