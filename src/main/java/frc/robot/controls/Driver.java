@@ -14,10 +14,6 @@ public class Driver {
 
 
   public static void configureControls() {
-    //driver.get(Button.A).whenPressed(new PIDCommand());
-  }
-  public double getRawThrottleValue() {
-    return driver.get(Axis.LEFT_Y);
     driver.get(Button.A).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(0.1)));
     driver.get(Button.A).whenReleased(new InstantCommand(() -> Robot.intake.setMotor(0)));
     driver.get(Button.B).whenPressed(new InstantCommand(() -> Robot.intake.setMotor(-0.1)));
@@ -30,7 +26,9 @@ public class Driver {
 
     driver.get(Button.LB).whenPressed(new InstantCommand(() -> Robot.conveyor.setMotor(0.1)));
     driver.get(Button.LB).whenReleased(new InstantCommand(() -> Robot.conveyor.setMotor(0.0)));
-
+  }
+  public double getRawThrottleValue() {
+    return driver.get(Axis.LEFT_Y);
   }
 
   public double getRawTurnValue() {
